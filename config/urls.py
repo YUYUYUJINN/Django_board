@@ -23,7 +23,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('', board.views.mainPage),
 
-    path('reply/create', reply.views.create),
+    path('reply/create/<int:bid>', reply.views.create),
     path('reply/list', reply.views.list),
     path('reply/read/<int:rid>', reply.views.read),
     path('reply/delete/<int:rid>', reply.views.delete),

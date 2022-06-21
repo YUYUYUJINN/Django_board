@@ -37,7 +37,10 @@ def listGet(request):
 
 
 def readGet(request, bid):
-    post = Post.objects.get(Q(id=bid))
+
+    # select_related, 정방향
+    # prefetch_related, 역방향
+    post = Post.objects.prefetch_related('reply_set').get(id=bid)  # reply_set이 추가로 들어감
 
     replyForm = ReplyForm()
     context = {'post': post, 'replyForm': replyForm}

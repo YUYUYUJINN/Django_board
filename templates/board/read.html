@@ -14,14 +14,18 @@
     {% if post.writer == request.user %}
     <a href="../update/{{ post.id }}">수정</a>
     <a href="../deleteGet/{{ post.id }}">삭제</a>
-    {% endif %}
-{% endif %}
-<br />
-<form action="/reply/create" method="post">
+    {% endif %} <br />
+<form action="/reply/create/{{ post.id }}" method="post">
     {% csrf_token %}
     {{ replyForm }}
     <button>댓글달기</button>
 </form>
+
+{% for reply in post.reply_set.all %}
+    {{ reply.contents }} </br>
+{% endfor %}
+
+{% endif %}
 
 </body>
 </html>
