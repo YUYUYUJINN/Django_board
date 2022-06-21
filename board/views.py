@@ -5,6 +5,7 @@ from django.shortcuts import render, redirect
 
 from board.forms import PostForm
 from board.models import Post
+from reply.forms import ReplyForm
 
 
 def mainPage(request):
@@ -37,7 +38,9 @@ def listGet(request):
 
 def readGet(request, bid):
     post = Post.objects.get(Q(id=bid))
-    context = {'post': post}
+
+    replyForm = ReplyForm()
+    context = {'post': post, 'replyForm': replyForm}
 
     return render(request, 'board/read.html', context)
 

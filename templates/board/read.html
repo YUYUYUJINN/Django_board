@@ -16,8 +16,12 @@
     <a href="../deleteGet/{{ post.id }}">삭제</a>
     {% endif %}
 {% endif %}
-
-
+<br />
+<form action="/reply/create" method="post">
+    {% csrf_token %}
+    {{ replyForm }}
+    <button>댓글달기</button>
+</form>
 
 </body>
 </html>
