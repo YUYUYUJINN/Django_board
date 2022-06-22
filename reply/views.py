@@ -24,7 +24,7 @@ def create(request, bid):
 
             reply.writer = request.user  # 사용자 지정
             reply.save()
-        return redirect('/board/readGet/' + str(bid))
+        return redirect('/board/read/' + str(bid))
 
 
 def list(request):

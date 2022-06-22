@@ -15,7 +15,7 @@ def signup(request):
             user = signupForm.save(commit=False)
             user.save()
 
-        return redirect('/board/listGet')
+        return redirect('/board/list')
 
 
 def login(request):
@@ -27,7 +27,7 @@ def login(request):
         loginForm = AuthenticationForm(request, request.POST)
         if loginForm.is_valid():
             auth_login(request, loginForm.get_user())  # 세션 방식, 토큰 방색 2개가 있음, 여기서는 세션 방식
-            return redirect('/board/listGet')
+            return redirect('/board/list')
             # username = request.POST.get('username')
             # password = request.POST.get('password')
             # user = User.objects.get(instance=username)

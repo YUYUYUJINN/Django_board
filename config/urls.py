@@ -21,7 +21,6 @@ import reply.views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('board/list', board.views.mainPage),
 
     path('reply/create/<int:bid>', reply.views.create),
     path('reply/list', reply.views.list),
@@ -30,12 +29,15 @@ urlpatterns = [
     path('reply/update/<int:rid>', reply.views.update),
 
     path('board/create', board.views.create),
-    path('board/listGet', board.views.listGet),
-    path('board/readGet/<int:bid>', board.views.readGet),
-    path('board/deleteGet/<int:bid>', board.views.deleteGet),
+    path('board/list', board.views.list),
+    path('board/read/<int:bid>', board.views.read),
+    path('board/delete/<int:bid>', board.views.delete),
     path('board/update/<int:bid>', board.views.update),
 
     path('user/signup', user.views.signup),
     path('user/login', user.views.login),
     path('user/logout', user.views.logout),
+
+    path('like/<int:bid>', board.views.like)
+
 ]

@@ -9,10 +9,10 @@
 {% if post %}
   {{ post.title }} <br />
   {{ post.contents }} <br />
-    <a href="/board/listGet">목록</a>
+    <a href="/board/list">목록</a>
     {% if request.user == post.writer %}
         <a href="/board/update/{{post.id}}">수정</a>
-        <a href="/board/deleteGet/{{post.id}}">삭제</a>
+        <a href="/board/delete/{{post.id}}">삭제</a>
     {% endif %}
 
     <form action="/reply/create/{{ post.id }}" method="post">
@@ -23,7 +23,11 @@
 
     {% if post.reply_set %}
         {% for reply in post.reply_set.all %}
-            {{ reply.contents }} <br />
+            {{ reply.contents }}
+            {% if reply.writer == request.user %}
+                <a href="/reply/update/{{ reply.id }}">수정</a>
+                <a href="/reply/delete/{{ reply.id }}">삭제</a>
+            {% endif %}<br />
         {% endfor %}
     {% endif %}
 {% endif %}

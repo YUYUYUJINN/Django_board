@@ -9,8 +9,8 @@
     {{ reply.id }}
     {{ reply.contents }} <br />
     {% if reply.writer == request.user %}
-    <a href="../update/{{ reply.id }}">수정</a>
-    <a href="../delete/{{ reply.id }}">삭제</a>
+    <a href="/reply/update/{{ reply.id }}">수정</a>
+    <a href="/reply/delete/{{ reply.id }}">삭제</a>
     {% endif %}
 {% endif %}
 </body>

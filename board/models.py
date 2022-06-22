@@ -10,4 +10,5 @@ class Post(models.Model):
     # 어떤 모델과 관계를 맺을지 작성
     # User 모델을 만든 적이 없지만 장고에서 이미 만들어 두었기에 사용 가능
     # 사용자가 탈퇴할 경우 관련 게시글 삭제할 수 있도록 설정 (on_delete=models.CASCADE)
+    like = models.ManyToManyField(User, related_name='likes', blank=True)
 
