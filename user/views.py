@@ -6,7 +6,7 @@ from django.contrib.auth import login as auth_logout
 # Create your views here.
 def signup(request):
     if request.method == "GET":
-        signupForm = UserCreationForm()
+        signupForm = UserCreationForm()  # 장고에서 이미 폼을 만들어둠, import만 해서 사용 가능
         return render(request, 'user/signup.html', {'signupForm': signupForm})
     elif request.method == "POST":
         signupForm = UserCreationForm(request.POST)
@@ -26,7 +26,7 @@ def login(request):
     elif request.method == "POST":
         loginForm = AuthenticationForm(request, request.POST)
         if loginForm.is_valid():
-            auth_login(request, loginForm.get_user())
+            auth_login(request, loginForm.get_user())  # 세션 방식, 토큰 방색 2개가 있음, 여기서는 세션 방식
             return redirect('/board/listGet')
             # username = request.POST.get('username')
             # password = request.POST.get('password')

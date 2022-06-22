@@ -8,3 +8,4 @@ class ReplyForm(forms.ModelForm):
         model = Reply
         fields = ('contents',)
         exclude = ('writer',)  # 양식에서 제외할 필드 목록
+

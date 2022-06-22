@@ -17,14 +17,14 @@ def create(request, bid):
         if replyForm.is_valid():
             reply = replyForm.save(commit=False)
 
-            # 어떤 게시글에 어떤 사용자가 남기는지 저장하게 둠
+            # 어떤 게시글에 어떤 사용자가 남기는지 저장하게 둠, 게시글 지정
             post = Post()
             post.id = bid
             reply.post = post
 
-            reply.writer = request.user
+            reply.writer = request.user  # 사용자 지정
             reply.save()
-        return redirect('/reply/read/' + str(reply.id))
+        return redirect('/board/readGet/' + str(bid))
 
 
 def list(request):

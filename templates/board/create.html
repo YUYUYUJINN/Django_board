@@ -5,11 +5,9 @@
     <title>Title</title>
 </head>
 <body>
-<form action="create" method="post">
+<form method="post">
     {% csrf_token %}
-
     {{ postForm }}
-
     <button>저장</button>
 </form>
 </body>

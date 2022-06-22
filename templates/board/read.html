@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -5,27 +6,26 @@
     <title>Title</title>
 </head>
 <body>
-
 {% if post %}
-    {{ post.id }}
-    {{ post.title }}
-    {{ post.contents }} <br />
-    <a href="../listGet">목록</a>
-    {% if post.writer == request.user %}
-    <a href="../update/{{ post.id }}">수정</a>
-    <a href="../deleteGet/{{ post.id }}">삭제</a>
-    {% endif %} <br />
-<form action="/reply/create/{{ post.id }}" method="post">
-    {% csrf_token %}
-    {{ replyForm }}
-    <button>댓글달기</button>
-</form>
+  {{ post.title }} <br />
+  {{ post.contents }} <br />
+    <a href="/board/listGet">목록</a>
+    {% if request.user == post.writer %}
+        <a href="/board/update/{{post.id}}">수정</a>
+        <a href="/board/deleteGet/{{post.id}}">삭제</a>
+    {% endif %}
 
-{% for reply in post.reply_set.all %}
-    {{ reply.contents }} </br>
-{% endfor %}
+    <form action="/reply/create/{{ post.id }}" method="post">
+        {% csrf_token %}
+        {{ replyForm }}
+        <button>댓글 달기</button>
+    </form>
 
+    {% if post.reply_set %}
+        {% for reply in post.reply_set.all %}
+            {{ reply.contents }} <br />
+        {% endfor %}
+    {% endif %}
 {% endif %}
-
 </body>
 </html>

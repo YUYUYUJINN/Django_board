@@ -21,7 +21,7 @@ import reply.views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', board.views.mainPage),
+    path('board/list', board.views.mainPage),
 
     path('reply/create/<int:bid>', reply.views.create),
     path('reply/list', reply.views.list),

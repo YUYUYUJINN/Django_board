@@ -1,6 +1,4 @@
-import bid
 from django.contrib.auth.decorators import login_required
-from django.db.models import Q
 from django.shortcuts import render, redirect
 
 from board.forms import PostForm
@@ -9,29 +7,29 @@ from reply.forms import ReplyForm
 
 
 def mainPage(request):
-    return render(request, 'board/index.html')
+    return render(request, 'board/list.html')
 
 
 @login_required(login_url='/user/login')
 def create(request):
     if request.method == "GET":
-        postForm = PostForm()
-        context = {'postForm': postForm}
+        postForm = PostForm()  # 객체 생성, 데이터를 전달 받음
+        context = {'postForm': postForm}  # 서버가 클라이언트한테 전달해주고 싶음, 딕셔너리 형태로 전달
         return render(request, 'board/create.html', context)
     elif request.method == "POST":
-        postForm = PostForm(request.POST)
+        postForm = PostForm(request.POST) # 객체 생성, 데이터를 전달 받음
         if postForm.is_valid():
-            post = postForm.save(commit=False)
-            post.writer = request.user
+            post = postForm.save(commit=False)  # 적용하기 전에 어떻게 저장이 되는지 확인
+            post.writer = request.user  # 로그인을 한 사용자각 wirter가 되어서 작성할 수 있게 함
             post.save()
 
         return redirect('/board/readGet/'+str(post.id))
 
 
-def listGet(request):
-    posts = Post.objects.all().order_by('-id')
+def listGet(request): # 리스트에 여러개의 post 객체들이 저장됨
+    posts = Post.objects.all().order_by('-id')  # 데이터를 가지고 오고 싶은 모델(Post)에 데이터를 가져옴, 역순으로 정렬
 
-    context = {'posts': posts}
+    context = {'posts': posts}  # 서버가 클라이언트한테 전달해주고 싶음, 딕셔너리 형태로 전달
 
     return render(request, 'board/list.html', context)
 
@@ -40,7 +38,7 @@ def readGet(request, bid):
 
     # select_related, 정방향
     # prefetch_related, 역방향
-    post = Post.objects.prefetch_related('reply_set').get(id=bid)  # reply_set이 추가로 들어감
+    post = Post.objects.prefetch_related('reply_set').get(id=bid)  # reply_set이 추가로 들어감 (장고에서의 규칙임)
 
     replyForm = ReplyForm()
     context = {'post': post, 'replyForm': replyForm}
@@ -61,15 +59,17 @@ def deleteGet(request, bid):
 @login_required(login_url='/user/login')
 def update(request, bid):
     post = Post.objects.get(id=bid)
+    if request.user != post.writer:
+        return redirect('/board/readGet/' + str(bid))
+
     if request.method == "GET":
-        postFrom = PostForm(instance=post) # 조회한 것을 폼에 담는 작업
-        context = {
-            'postForm' : postFrom
-        }
-        return render(request, 'board/update.html', context)
+        postForm = PostForm(instance=post)
+        context = {'postForm': postForm}
+        return render(request, "board/create.html", context)
+
     elif request.method == "POST":
-        postForm = PostForm(request.POST, instance=post) # 기존 게시글 수정
+        postForm = PostForm(request.POST, instance=post)
         if postForm.is_valid():
             post = postForm.save(commit=False)
             post.save()
-        return redirect('/board/readGet/' + str(post.id))
+        return redirect('/board/readGet/' + str(bid))
