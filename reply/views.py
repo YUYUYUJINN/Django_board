@@ -40,17 +40,17 @@ def read(request, rid):
 
 
 @login_required(login_url='/user/login')
-def delete(request, rid):
+def delete(request, rid, bid):
     reply = Reply.objects.get(id=rid)
     if request.user != reply.writer:
-        return redirect('/reply/list')
+        return redirect('/board/read/' + str(bid))
     reply.delete()
 
-    return redirect('/reply/list')
+    return redirect('/board/read/' + str(bid))
 
 
 @login_required(login_url='/user/login')
-def update(request, rid):
+def update(request, rid, bid):
     reply = Reply.objects.get(id=rid)
     if request.method == "GET":
         replyForm = ReplyForm(instance=reply)
@@ -60,4 +60,4 @@ def update(request, rid):
         if replyForm.is_valid():
             reply = replyForm.save(commit=False)
             reply.save()
-        return redirect('/reply/read/' + str(reply.id))
+        return redirect('/board/read/' + str(bid))

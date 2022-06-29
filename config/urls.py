@@ -21,12 +21,11 @@ import reply.views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-
     path('reply/create/<int:bid>', reply.views.create),
     path('reply/list', reply.views.list),
     path('reply/read/<int:rid>', reply.views.read),
-    path('reply/delete/<int:rid>', reply.views.delete),
-    path('reply/update/<int:rid>', reply.views.update),
+    path('reply/delete/<int:rid>/<int:bid>', reply.views.delete),
+    path('reply/update/<int:rid>/<int:bid>', reply.views.update),
 
     path('board/create', board.views.create),
     path('board/list', board.views.list),
